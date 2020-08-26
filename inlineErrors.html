@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inline Errors</title>
+    <style>
+        body{
+            font: 120%/1.5 sans-serif;
+            background: #fff;
+        }
+        main{
+            margin: 0 auto;
+            width: 100%;
+            max-width: 50em;
+        }
+        h1{
+            text-align: center;
+        }
+        .errorMessage, .serrorMessage, .eErrorMessage, #passerror, #usererror{
+            color:#ef0000;
+        }
+        .flex{
+            display: flex;
+            justify-content: space-between;
+        }
+        .a11y {
+          clip-path: inset(100%);
+          clip: rect(1px, 1px, 1px, 1px);
+          height: 1px;
+          overflow: hidden;
+          position: absolute;
+          white-space: nowrap;
+          width: 1px;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <h1>
+            Accessible Inline Errors
+        </h1>
+        <p><sup>*</sup>Fields are required</p>
+        <!-- <h2>OnSubmit</h2>
+        <div>
+            <label for="fname">First Name <sup>*</sup>:</label>
+            <input type="text" id="fname" aria-required="true">
+            <small class="errorMessage" id="error"></small>
+            <div>
+                <button class="validateButton">Submit</button>
+            </div>
+            
+        </div>
+        <h2>Blur and Submit</h2>
+        <div>
+            <label for="sname">Second Name <sup>*</sup>:</label>
+            <input type="text" id="sname" aria-required="true">
+            <small class="serrorMessage" id="serror" aria-live="polite"></small>
+            <div>
+                <button class="blurButton">Submit</button>
+            </div>
+            
+        </div>
+        <h2>Keyup and Submit</h2>
+        <div>
+            <label for="email">Email Address <sup>*</sup>:</label>
+            <input type="email" id="email" aria-required="true">
+            <small class="eErrorMessage" id="eError"></small>
+            <div>
+                <button class="keupButton">Submit</button>
+            </div>
+            
+        </div> -->
+        <div class="flex">
+            <div>
+            <h2>click</h2>
+                    <div>
+                        <label for="fname">First Name <sup>*</sup>:</label>
+                        <input type="text" id="fname" aria-required="true">
+                        <small class="errorMessage" id="error"></small>
+                        <div>
+                            <button class="validateButton">Submit</button>
+                        </div>
+                        
+                    </div>
+                    <h2>Blur and click</h2>
+                    <div>
+                        <label for="sname">Second Name <sup>*</sup>:</label>
+                        <input type="text" id="sname" aria-required="true">
+                        <small class="serrorMessage" id="serror" aria-live="polite"></small>
+                        <div>
+                            <button class="blurButton">Submit</button>
+                        </div>
+                        
+                    </div>
+                    <h2>Keyup >1</h2>
+                    <div>
+                        <label for="email">Email Address <sup>*</sup>:</label>
+                        <input type="email" id="email" aria-required="true">
+                        <small class="eErrorMessage" id="eError" aria-live="polite"></small>
+                        <div>
+                            <button class="keupButton">Submit</button>
+                        </div>
+                        
+                    </div>
+            </div>
+            <div><div>
+            <h2>Form Fields Group</h2>
+            <div class="errorBulk" tabindex="-1"></div>
+            <div class="success" tabindex="-1"></div>
+                    <div>
+                        <label for="username">Username <sup>*</sup>:</label>
+                        <input type="text" id="username" aria-required="true">
+                        <small class="userError" id="usererror" aria-live="polite"></small>
+                        <div>
+                            
+                        </div>
+                        
+                    </div>
+                    <div>
+                        <label for="passwd">Password <sup>*</sup>:</label>
+                        <input type="password" id="passwd" aria-required="true">
+                        <small class="passError" id="passerror" aria-live="polite"></small>
+                        <div>
+                        </div>
+                        
+                    </div>
+                    <button class="validateSubmit">Submit</button>
+                    <!-- <div>
+                        <label for="email">Email Address <sup>*</sup>:</label>
+                        <input type="email" id="email" aria-required="true">
+                        <small class="eErrorMessage" id="eError"></small>
+                        <div> -->
+                            
+                        </div>
+                        
+                    </div>
+            
+            </div></div>
+            </div>
+            <!-- <h3>Errors Below</h3>
+            <ol class="errorList"></ol> -->
+    </main>
+    <script>
+        (function(){
+            //submitfields
+            const validateButton = document.querySelector(".validateButton");
+            const errorMessage = document.querySelector(".errorMessage");
+            const field = document.querySelector("#fname");
+
+            //blurfields
+            const blurButton = document.querySelector(".blurButton");
+            const serrorMessage = document.querySelector(".serrorMessage");
+            const field2 = document.querySelector("#sname");
+            // var hiddenText = document.createElement("span")  
+            //     hiddenText.classList.add("a11y");
+                // hiddenText.textContent = "Error";      // Create a text node
+                // errorMessage.appendChild(hiddenText);
+                // serrorMessage.appendChild(hiddenText);
+
+            //emailFields
+            const emailInputField = document.querySelector("#email");
+            const emailButton = document.querySelector(".keupButton");
+            const emailError = document.querySelector(".eErrorMessage");
+
+            //firstfield
+            const validate = (e) => {
+                if(field.value === ""){
+                    errorMessage.innerHTML = "First name is required";
+                // errorMessage.appendChild = "<span class="a11y"></span>";
+                field.setAttribute("aria-invalid", "true");
+                field.setAttribute("aria-describedby", "error") 
+                field.focus();
+            } else {
+                errorMessage.innerHTML = "";
+                // errorMessage.appendChild = "<span class="a11y"></span>";
+                field.setAttribute("aria-invalid", "false");
+                field.removeAttribute("aria-describedby", "error");
+            }
+            };
+
+            validateButton.addEventListener('click', validate);
+
+            //secondfield
+            const svalidate = (e) => {
+                if(field2.value === ""){
+                    serrorMessage.innerHTML = "Second name is required"; 
+                // errorMessage.appendChild = "<span class="a11y"></span>";
+                field2.setAttribute("aria-invalid", "true");
+                field2.setAttribute("aria-describedby", "serror")   
+                field2.focus();
+            } else {
+                serrorMessage.innerHTML = "";
+                // errorMessage.appendChild = "<span class="a11y"></span>";
+                field2.setAttribute("aria-invalid", "false");
+                field2.removeAttribute("aria-describedby", "serror");
+            }
+            };
+
+            const blurfunction = (e) => {
+                if(field2.value === ""){
+                    serrorMessage.innerHTML = "Second name is required";
+                // errorMessage.appendChild = "<span class="a11y"></span>";
+                field2.setAttribute("aria-invalid", "true");
+                field2.setAttribute("aria-describedby", "serror")   
+            } else {
+                serrorMessage.innerHTML = "";
+                // errorMessage.appendChild = "<span class="a11y"></span>";
+                field2.setAttribute("aria-invalid", "false");
+                field2.removeAttribute("aria-describedby", "serror");
+            }
+            };
+            blurButton.addEventListener('click', svalidate);
+            field2.addEventListener("blur", blurfunction);
+        
+            //emailVaidation
+
+            const emailValidation = (e) => {
+                if(emailInputField.value === ""){
+                    emailError.innerHTML = "Email is required";
+                    emailInputField.setAttribute("aria-invalid", "true");
+                    emailInputField.setAttribute("aria-describedby", "eError");
+                    emailInputField.focus();
+                } else {
+                    emailError.innerHTML = "";
+                    emailInputField.removeAttribute("aria-invalid", "true");
+                    emailInputField.removeAttribute("aria-describedby", "eError");
+                }
+                
+            };
+
+            // const emailValidation = (e) => {
+            //     if(emailInputField.hasAttribute("aria-invalid", "true")){
+            //         emailInputField.focus();
+            //     };
+                // if(emailInputField.value.contains("@") == "false" ) {
+                //     emailError.innerHTML = "Email should have @"; 
+                //     emailInputField.setAttribute("aria-invalid", "true");
+                //     emailInputField.setAttribute("aria-describedby", "eError"); 
+                // } else {
+                //     emailError.innerHTML = "";
+                //     emailInputField.removeAttribute("aria-invalid", "true");
+                //     emailInputField.removeAttribute("aria-describedby", "eError");
+                // }
+                // if(emailInputField.value === "a-z,A-Z,0-9"){
+                //     emailError.innerHTML = "Email should have @"; 
+                //     emailInputField.setAttribute("aria-invalid", "true");
+                //     emailInputField.setAttribute("aria-describedby", "eError"); 
+            // } else {
+                //     emailError.innerHTML = "";
+                //     emailInputField.removeAttribute("aria-invalid", "true");
+                //     emailInputField.removeAttribute("aria-describedby", "eError");
+                // }; 
+
+                
+            // };
+            const keyValidation = (e) => {
+                // debugger;
+                if(document.querySelector("#email").value.length > 1){
+                    emailError.innerHTML = "Email is required";
+                    emailInputField.setAttribute("aria-invalid", "true");
+                    emailInputField.setAttribute("aria-describedby", "eError");
+                }
+                
+            };
+            emailButton.addEventListener('click', emailValidation);
+            emailInputField.addEventListener('keyup', keyValidation);
+        })();
+    </script>
+    <script>
+        (function(){
+            //declaringVariables
+            const username = document.querySelector("#username");
+            const password = document.querySelector("#passwd");
+            const userError = document.querySelector(".userError");
+            const passwordError = document.querySelector(".passError");
+            const submitForm = document.querySelector(".validateSubmit");
+            var errorList = document.querySelector('.errorBulk');
+            var successMessage = document.querySelector(".success");
+
+            // var errorListing = '<div><p>Please fill the fields below</p><ul><li>Username</li><li>Password</li></ul></div>';
+            // var errorGroup = errorList.appendChild("span");
+
+            const formValidate = (e) => {
+                // if(username.value === "" || password.value === ""){
+                //     userError.innerHTML = "Username is required";
+                //     passwordError.innerHTML = "Password is required";
+                //     username.setAttribute("aria-invalid", "true");
+                //     password.setAttribute("aria-invalid", "true");
+                //     username.setAttribute("aria-describedby", "usererror");
+                //     password.setAttribute("aria-describedby", "passerror");
+                //     errorList.innerHTML = '<h3>There are errors in your form submission listed below:</h3><ol id="errorsList"></ol>';
+                //     // debugger;
+                //     // document.querySelector("#errorsList").innerHTML = "<li>Username</li><li>Password</li>";
+                //     // document.querySelector("#errorsList").innerHTML = document.querySelector("#errorsList").innerHTML + "<li>Password</li>";
+
+                //     errorList.focus();
+                // } else if(username.value && password.value ) {
+                //     userError.innerHTML = "";
+                //     passwordError.innerHTML = "";
+                //     username.removeAttribute("aria-invalid", "false");
+                //     password.removeAttribute("aria-invalid", "false");
+                //     username.removeAttribute("aria-describedby", "usererror");
+                //     password.removeAttribute("aria-describedby", "passerror");
+                //     errorList.innerHTML = "";
+                //     // errorList.appendChild("<p>Please fill the fields below</p><ul><li>Username</li><li>Password</li></ul>")
+                //     // errorList.removeChild('<h3>There are errors in your form submission listed below:</h3><ol id="errorsList"></ol>');
+                // } 
+
+                if(username.value === "" && password.value === ""){
+                    userError.innerHTML = "Username is required";
+                    passwordError.innerHTML = "Password is required";
+                    username.setAttribute("aria-invalid", "true");
+                    password.setAttribute("aria-invalid", "true");
+                    username.setAttribute("aria-describedby", "usererror");
+                    password.setAttribute("aria-describedby", "passerror");
+                    errorList.innerHTML = '<h3>There are errors in your form submission listed below:</h3><ol id="errorsList"></ol>';
+                    document.querySelector("#errorsList").innerHTML = '<li>Username</li><li>Password</li>';
+                    // document.querySelector("#errorsList").innerHTML = "<li>Password</li>";
+                    errorList.focus();
+                } else if(username.value === "") {
+                    userError.innerHTML = "Username is required";
+                    username.setAttribute("aria-invalid", "true");
+                    username.setAttribute("aria-describedby", "usererror");
+                    passwordError.innerHTML = "";
+                    password.removeAttribute("aria-invalid", "false");
+                    password.removeAttribute("aria-describedby", "passerror");
+                    errorList.innerHTML = '<h3>There are errors in your form submission listed below:</h3><ol id="errorsList"></ol>';
+                    document.querySelector("#errorsList").innerHTML = '<li>Username</li>';
+                    errorList.focus();
+                } else if(password.value === ""){
+                    passwordError.innerHTML = "Password is required";
+                    password.setAttribute("aria-invalid", "true");
+                    password.setAttribute("aria-describedby", "passerror");
+                    userError.innerHTML = "";
+                    username.removeAttribute("aria-invalid", "false");
+                    username.removeAttribute("aria-describedby", "usererror");
+                    errorList.innerHTML = '<h3>There are errors in your form submission listed below:</h3><ol id="errorsList"></ol>';
+                    document.querySelector("#errorsList").innerHTML = '<li>Password</li>';
+                    errorList.focus();
+                
+                // } else if(username.value !== "" ||  password.value !== ""){
+                //     username.removeAttribute("aria-invalid", "false");
+                //     username.removeAttribute("aria-describedby", "usererror");
+                //     passwordError.innerHTML = "";
+                //     password.removeAttribute("aria-invalid", "false");
+                //     password.removeAttribute("aria-describedby", "passerror");
+                //     errorList.innerHTML = "";
+                //     document.querySelector("#errorsList").innerHTML = "";
+                } else {
+                    userError.innerHTML = "";
+                    username.removeAttribute("aria-invalid", "false");
+                    username.removeAttribute("aria-describedby", "usererror");
+                    passwordError.innerHTML = "";
+                    password.removeAttribute("aria-invalid", "false");
+                    password.removeAttribute("aria-describedby", "passerror");
+                    errorList.innerHTML = "";
+                    // document.querySelector("#errorsList").innerHTML = "";
+                    successMessage.innerHTML = "Success";
+                    successMessage.focus();
+                };
+                
+                // if(password.value === "") {
+                //     passwordError.innerHTML = "Password is required";
+                //     password.setAttribute("aria-invalid", "true");
+                //     password.setAttribute("aria-describedby", "passerror");
+                //     errorList.innerHTML = '<h3>There are errors in your form submission listed below:</h3><ol id="errorsList"></ol>';
+                //     // document.querySelector("#errorsList").innerHTML = "<li>Password</li>";
+                //     // errorList.append('<div><p>Please fill the fields below</p><ul><li>Password</li></ul></div>');
+                //     errorList.focus();
+                // } else {
+                //     passwordError.innerHTML = "";
+                //     password.removeAttribute("aria-invalid", "false");
+                //     password.removeAttribute("aria-describedby", "usererror");
+                //     // errorList.appendChild("<p>Please fill the fields below</p><ul><li>Username</li><li>Password</li></ul>")
+                // }
+            }
+
+
+            //addEventListener
+            submitForm.addEventListener("click", formValidate);
+        })();
+    </script>
+</body>
+</html>
